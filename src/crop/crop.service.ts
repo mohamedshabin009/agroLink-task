@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { crop } from './crop.entity';
-import { Like, Repository } from 'typeorm';
+import { ILike, Like, Repository } from 'typeorm';
 import { CropDto, UpdateCropDto } from './crop.dto';
 import { agrochemical } from 'src/agrochemical/agrochemical.entity';
 
@@ -24,9 +24,13 @@ export class CropService {
     return await this.cropModel.find();
   }
 
-  async getBySearch(cropName) {
+  async getBySearch(cropName, cropType) {
     return await this.cropModel.find({
-      where: { cropName: Like(`%${cropName}%`) },
+      where: [
+        { cropName: ILike(`%${cropName}%`) },
+        { cropType: ILike(`%${cropType}%`) },
+      ],
+      //where: { cropName: ILike(`%${cropName}%`) },
     });
   }
 

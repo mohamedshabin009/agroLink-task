@@ -39,8 +39,14 @@ export class CropController {
   }
 
   @Get('name/search')
-  async searchFilter(@Query() param: { cropName: string }) {
-    return await this.cropServices.getBySearch(param.cropName);
+  async searchFilter(
+    @Query() param: { cropName: string },
+    @Query() paramForCropType: { cropType: string },
+  ) {
+    return await this.cropServices.getBySearch(
+      param.cropName,
+      paramForCropType.cropType,
+    );
   }
 
   @Get('searchInfo')
