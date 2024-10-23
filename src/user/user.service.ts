@@ -41,9 +41,15 @@ export class UserService {
   }
 
   async searchBy(userName) {
-    return await this.userModel.find({
+    const check = await this.userModel.find({
       where: { userName: ILike(`%${userName}%`) },
     });
+
+    if (check.length === 0) {
+      throw new NotFoundException(`No users found with the name ${userName}`);
+    }
+
+    return check;
   }
 
   async getOne(userId: number) {

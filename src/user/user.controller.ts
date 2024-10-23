@@ -28,7 +28,7 @@ export class UserController {
   }
 
   @Get('userSearchBy')
-  async searchFilter(@Query('userName') paramForName: { userName: string }) {
+  async searchFilter(@Query() paramForName: { userName: string }) {
     return await this.userServices.searchBy(paramForName.userName);
   }
 
