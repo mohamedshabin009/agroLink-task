@@ -31,12 +31,6 @@ export class CropController {
     return await this.cropServices.getAll();
   }
   // start in this area
-  @Get(':cropId')
-  async getOne(@Param('cropId') id: number, @Query() params: any) {
-    //console.info(id,"id",search)
-    console.info(id, params);
-    return await this.cropServices.findOne(id);
-  }
 
   @Get('name/search')
   async searchFilter(
@@ -49,9 +43,11 @@ export class CropController {
     );
   }
 
-  @Get('searchInfo')
-  async searchByName() {
-    // return await this.cropServices.getBySearch(params);
+  @Get(':cropId')
+  async getOne(@Param('cropId') id: number, @Query() params: any) {
+    //console.info(id,"id",search)
+    console.info(id, params);
+    return await this.cropServices.findOne(id);
   }
 
   @Put('updateCropByCropID/:cropId')
