@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { user } from './user.entity';
-import { Repository } from 'typeorm';
+import { ILike, Like, Repository } from 'typeorm';
 import { UpdateUser, UserDto } from './user.dto';
 
 @Injectable()
@@ -38,6 +38,12 @@ export class UserService {
 
   async getAllUser() {
     return await this.userModel.find();
+  }
+
+  async searchBy(userName) {
+    return await this.userModel.find({
+      where: { userName: ILike(`%${userName}%`) },
+    });
   }
 
   async getOne(userId: number) {

@@ -6,8 +6,7 @@ import {
   Post,
   Put,
   Delete,
-  UsePipes,
-  ValidationPipe,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUser, UserDto } from './user.dto';
@@ -26,6 +25,11 @@ export class UserController {
   @Get('getAllFarmers')
   async findAll() {
     return await this.userServices.getAllUser();
+  }
+
+  @Get('userSearchBy')
+  async searchFilter(@Query('userName') paramForName: { userName: string }) {
+    return await this.userServices.searchBy(paramForName.userName);
   }
 
   @Get(':userId')
