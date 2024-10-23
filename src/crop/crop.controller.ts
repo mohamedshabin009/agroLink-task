@@ -7,12 +7,14 @@ import {
   Post,
   Put,
   Query,
+  Req,
   Search,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { CropService } from './crop.service';
 import { CropDto, UpdateCropDto } from './crop.dto';
+import { crop } from './crop.entity';
 
 @Controller('crop')
 export class CropController {
@@ -34,6 +36,16 @@ export class CropController {
     //console.info(id,"id",search)
     console.info(id, params);
     return await this.cropServices.findOne(id);
+  }
+
+  @Get('name/search')
+  async searchFilter(@Query() param: { cropName: string }) {
+    return await this.cropServices.getBySearch(param.cropName);
+  }
+
+  @Get('searchInfo')
+  async searchByName() {
+    // return await this.cropServices.getBySearch(params);
   }
 
   @Put('updateCropByCropID/:cropId')
