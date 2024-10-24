@@ -5,11 +5,11 @@ import {
   Param,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { request } from './request.entity';
-import { user } from 'src/user/user.entity';
-import { crop } from 'src/crop/crop.entity';
-import { agrochemical } from 'src/agrochemical/agrochemical.entity';
+import { ILike, Repository } from 'typeorm';
+import { Request } from './request.entity';
+import { User } from 'src/user/User.entity';
+import { Crop } from 'src/crop/Crop.entity';
+import { AgroChemical } from 'src/agrochemical/AgroChemical.entity';
 import { UserService } from 'src/user/user.service';
 import { RequestDto, UpdateRequestDto } from './request.dto';
 import { CropService } from 'src/crop/crop.service';
@@ -18,8 +18,8 @@ import { AgrochemicalService } from 'src/agrochemical/agrochemical.service';
 @Injectable()
 export class RequestService {
   constructor(
-    @InjectRepository(request)
-    private readonly requestModel: Repository<request>,
+    @InjectRepository(Request)
+    private readonly requestModel: Repository<Request>,
     private readonly userService: UserService,
     private readonly cropService: CropService,
     private readonly agrochemicalService: AgrochemicalService,
@@ -42,23 +42,20 @@ export class RequestService {
 
     return {
       success: true,
-      req: await this.requestModel.findOne({
-        where: { requestId: request.requestId },
-        relations: ['userId', 'cropId', 'agrochemicalId'],
-      }),
+      req: request,
     };
   }
 
   async getAll() {
     return await this.requestModel.find({
-      relations: ['userId', 'cropId', 'agrochemicalId'],
+      relations: ['user', 'crop', 'agroChemical'],
     });
   }
   /// i removed this(@Param('requestId')) from underlined area (async getOne( _____ requestId:number))
   async getOne(requestId: number) {
     const checkReqId = await this.requestModel.findOne({
       where: { requestId },
-      relations: ['userId', 'cropId', 'agrochemicalId'],
+      relations: ['user', 'crop', 'agroChemical'],
     });
 
     if (!checkReqId) {
@@ -67,16 +64,30 @@ export class RequestService {
     return checkReqId;
   }
 
-  async getByUserID(userId) {
+  async getByUserID(id: any) {
     const checkRequestIdByUserId = await this.requestModel.findOne({
-      where: { userId },
-      relations: ['userId', 'cropId', 'agrochemicalId'],
+      where: { user: id },
+      relations: ['user', 'crop', 'agroChemical'],
     });
     if (!checkRequestIdByUserId) {
-      throw new NotFoundException(`There is No User Id ${userId}`);
+      throw new NotFoundException(`There is No User Id ${id}`);
     }
     return checkRequestIdByUserId;
   }
+
+  // async searchUserId(name: any) {
+  //   try {
+  //     console.info(name);
+  //     const response = await this.requestModel.find({
+  //       where: { user: { userName: 'su' } },
+  //       relations: ['user'],
+  //     });
+
+  //     return response;
+  //   } catch (err) {
+  //     throw new BadRequestException(err.message || err);
+  //   }
+  // }
 
   async updateRequest(requestId: number, requestParam: UpdateRequestDto) {
     try {

@@ -6,9 +6,9 @@ import {
   Delete,
   Body,
   Param,
+  Query,
 } from '@nestjs/common';
 import { RequestService } from './request.service';
-import { get } from 'http';
 import { RequestDto, UpdateRequestDto } from './request.dto';
 
 @Controller('request')
@@ -34,6 +34,11 @@ export class RequestController {
   async getAll() {
     return await this.requestServices.getAll();
   }
+
+  // @Get('searchUserName')
+  // async searchUser(@Query() searchUserName: { name: string }) {
+  //   return await this.requestServices.searchUserId(searchUserName.name);
+  // }
 
   @Get('getRequestByRequestId/:requestId')
   async getOne(@Param('requestId') id: number) {

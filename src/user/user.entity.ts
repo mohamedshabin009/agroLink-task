@@ -1,6 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from './User.dto';
-import { request } from 'src/request/request.entity';
 
 @Entity()
 export class User {
