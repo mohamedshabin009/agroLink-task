@@ -4,15 +4,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { crop } from './crop.entity';
-import { ILike, Like, Repository } from 'typeorm';
+import { Crop } from './Crop.entity';
+import { ILike, Repository } from 'typeorm';
 import { CropDto, UpdateCropDto } from './crop.dto';
-import { agrochemical } from 'src/agrochemical/agrochemical.entity';
 
 @Injectable()
 export class CropService {
   constructor(
-    @InjectRepository(crop) private readonly cropModel: Repository<crop>,
+    @InjectRepository(Crop) private readonly cropModel: Repository<Crop>,
   ) {}
 
   async createCrop(param: CropDto) {
@@ -21,7 +20,12 @@ export class CropService {
   }
 
   async getAll() {
-    return await this.cropModel.find();
+    try {
+      const getAllCrop = await this.cropModel.find();
+      return getAllCrop;
+    } catch (err) {
+      throw new BadRequestException(err.message || err);
+    }
   }
 
   async getBySearch(cropName, cropType) {
@@ -30,7 +34,6 @@ export class CropService {
         { cropName: ILike(`%${cropName}%`) },
         { cropType: ILike(`%${cropType}%`) },
       ],
-      //where: { cropName: ILike(`%${cropName}%`) },
     });
   }
 

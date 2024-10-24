@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class crop {
+export class Crop {
   @PrimaryGeneratedColumn('increment')
   cropId: number;
 

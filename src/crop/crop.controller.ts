@@ -7,14 +7,9 @@ import {
   Post,
   Put,
   Query,
-  Req,
-  Search,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { CropService } from './crop.service';
 import { CropDto, UpdateCropDto } from './crop.dto';
-import { crop } from './crop.entity';
 
 @Controller('crop')
 export class CropController {
