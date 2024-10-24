@@ -4,26 +4,34 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { agrochemical } from './agrochemical.entity';
+import { AgroChemical } from './AgroChemical.entity';
 import { Repository } from 'typeorm';
 import { AgroChemicalCreateDTO, UpdateAgroDto } from './agrochemical.dto';
 
 @Injectable()
 export class AgrochemicalService {
   constructor(
-    @InjectRepository(agrochemical)
-    private readonly agrochemicalModel: Repository<agrochemical>,
+    @InjectRepository(AgroChemical)
+    private readonly agrochemicalModel: Repository<AgroChemical>,
   ) {}
 
-  async createAgrochemical(body) {
+  async createAgrochemical(body: AgroChemicalCreateDTO) {
     try {
-      return await this.agrochemicalModel.save(
-        Object.assign(new agrochemical(), body),
-      );
+      return await this.agrochemicalModel.save(body);
     } catch (error) {
       throw new BadRequestException(error);
     }
   }
+
+  // async createAgrochemical(body) {
+  //   try {
+  //     return await this.agrochemicalModel.save(
+  //       Object.assign(new AgroChemical(), body),
+  //     );
+  //   } catch (error) {
+  //     throw new BadRequestException(error);
+  //   }
+  // }
 
   async getAll() {
     return await this.agrochemicalModel.find();
