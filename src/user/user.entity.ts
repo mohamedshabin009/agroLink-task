@@ -1,8 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { UserRole } from './user.dto';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { UserRole } from './User.dto';
+import { request } from 'src/request/request.entity';
 
 @Entity()
-export class user {
+export class User {
   @PrimaryGeneratedColumn('increment')
   userId: number;
 

@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUser, UserDto } from './user.dto';
-import { user } from './user.entity';
 
 @Controller('user')
 export class UserController {
@@ -28,8 +27,8 @@ export class UserController {
   }
 
   @Get('userSearchBy')
-  async searchFilter(@Query() paramForName: { userName: string }) {
-    return await this.userServices.searchBy(paramForName.userName);
+  async searchFilter(@Query() paramForName: { name: string }) {
+    return await this.userServices.searchBy(paramForName.name);
   }
 
   @Get(':userId')
@@ -46,6 +45,6 @@ export class UserController {
   @Delete(':userId')
   async deleteUser(@Param('userId') id: number) {
     await this.userServices.deleteUser(id);
-    return { success: true, message: 'Deleted successfully', user: user };
+    return { success: true, message: 'Deleted successfully' };
   }
 }
