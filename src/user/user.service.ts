@@ -16,8 +16,6 @@ export class UserService {
   ) {}
 
   async createUser(param: UserDto) {
-    // wanna continue from this line and fill this .save({})
-
     try {
       const _user = await this.userModel.findOne({
         where: { email: param.email },
@@ -37,7 +35,15 @@ export class UserService {
   }
 
   async getAllUser() {
-    return await this.userModel.find();
+    try {
+      const _getAllUser = await this.userModel.find();
+      if (_getAllUser.length === 0) {
+        throw new NotFoundException('No Users');
+      }
+      return _getAllUser;
+    } catch (error) {
+      throw new BadRequestException(error.message || error);
+    }
   }
 
   async searchBy(userName) {
