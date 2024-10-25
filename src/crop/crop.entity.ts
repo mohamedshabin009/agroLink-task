@@ -4,7 +4,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity()
 export class Crop {
   @PrimaryGeneratedColumn('increment')
-  @OneToMany(() => Request, (request) => request.crop)
+  // @OneToMany(() => Request, (request) => request.crop)
   id: number;
 
   @Column()
@@ -18,4 +18,7 @@ export class Crop {
 
   @Column()
   plantDate: Date;
+
+  @OneToMany(() => Request, (request) => request.agroChemical)
+  agro: Request[];
 }

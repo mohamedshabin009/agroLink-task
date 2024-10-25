@@ -5,7 +5,7 @@ import { Request } from 'src/request/request.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('increment')
-  @OneToMany(() => Request, (request) => request.user)
+  // @OneToMany(() => Request, (request) => request.user)
   id: number;
 
   @Column({ unique: true })
@@ -25,4 +25,7 @@ export class User {
 
   @Column()
   profileImage: string;
+
+  @OneToMany(() => Request, (request) => request.user)
+  requests: Request[];
 }

@@ -14,15 +14,17 @@ export class Request {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { nullable: true })
   @JoinColumn({ name: 'user' })
   user: User;
 
-  @ManyToOne(() => Crop, (crop) => crop.id)
+  @ManyToOne(() => Crop, (crop) => crop.id, { nullable: true })
   @JoinColumn({ name: 'crop' })
   crop: Crop;
 
-  @ManyToOne(() => AgroChemical, (agroChemical) => agroChemical.id)
+  @ManyToOne(() => AgroChemical, (agroChemical) => agroChemical.id, {
+    nullable: true,
+  })
   @JoinColumn({ name: 'agroChemical' })
   agroChemical: AgroChemical;
 

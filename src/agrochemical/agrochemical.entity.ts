@@ -4,7 +4,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity({ name: 'agroChemical' })
 export class AgroChemical {
   @PrimaryGeneratedColumn('increment')
-  @OneToMany(() => Request, (request) => request.agroChemical)
+  // @OneToMany(() => Request, (request) => request.agroChemical)
   id: number;
 
   @Column()
@@ -30,4 +30,7 @@ export class AgroChemical {
 
   @Column()
   image: string;
+
+  @OneToMany(() => Request, (request) => request.agroChemical)
+  agro: Request[];
 }
