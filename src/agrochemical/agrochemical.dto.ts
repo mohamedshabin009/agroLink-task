@@ -44,34 +44,34 @@ export class AgroChemicalCreateDTO {
 export class UpdateAgroDto {
   @IsString()
   @IsOptional()
-  name: string;
+  name?: string;
 
   @IsString()
   @IsOptional()
-  brand: string;
+  brand?: string;
 
   @IsString()
   @IsOptional()
-  category: string;
+  category?: string;
 
   @IsString()
   @IsOptional()
-  suitableCrop: string;
+  suitableCrop?: string;
 
   @IsString()
   @IsOptional()
-  description: string;
+  description?: string;
 
   @IsNumber()
   @IsOptional()
-  quantity: number;
+  quantity?: number;
 
   @IsString()
   @IsOptional()
   @IsDecimal()
-  pricePerUnit: string;
+  pricePerUnit?: string;
 
   @IsString()
   @IsOptional()
-  image: string;
+  image?: string;
 }
