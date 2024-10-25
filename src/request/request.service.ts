@@ -2,14 +2,10 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
-  Param,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 import { Request } from './request.entity';
-import { User } from 'src/user/User.entity';
-import { Crop } from 'src/crop/Crop.entity';
-import { AgroChemical } from 'src/agrochemical/AgroChemical.entity';
 import { UserService } from 'src/user/user.service';
 import { RequestDto, UpdateRequestDto } from './request.dto';
 import { CropService } from 'src/crop/crop.service';
@@ -51,10 +47,9 @@ export class RequestService {
       relations: ['user', 'crop', 'agroChemical'],
     });
   }
-  /// i removed this(@Param('requestId')) from underlined area (async getOne( _____ requestId:number))
   async getOne(requestId: number) {
     const checkReqId = await this.requestModel.findOne({
-      where: { requestId },
+      where: { id: requestId },
       relations: ['user', 'crop', 'agroChemical'],
     });
 
@@ -75,24 +70,24 @@ export class RequestService {
     return checkRequestIdByUserId;
   }
 
-  // async searchUserId(name: any) {
-  //   try {
-  //     console.info(name);
-  //     const response = await this.requestModel.find({
-  //       where: { user: { userName: 'su' } },
-  //       relations: ['user'],
-  //     });
+  async searchUserId(searchName: any) {
+    try {
+      console.info(searchName);
+      const response = await this.requestModel.find({
+        where: { user: { name: ILike(`%${searchName}%`) } },
+        relations: ['user'],
+      });
 
-  //     return response;
-  //   } catch (err) {
-  //     throw new BadRequestException(err.message || err);
-  //   }
-  // }
+      return response;
+    } catch (err) {
+      throw new BadRequestException(err.message || err);
+    }
+  }
 
   async updateRequest(requestId: number, requestParam: UpdateRequestDto) {
     try {
       const checkRequestId = await this.requestModel.findOne({
-        where: { requestId },
+        where: { id: requestId },
       });
       if (!checkRequestId) {
         throw new NotFoundException(
@@ -105,7 +100,9 @@ export class RequestService {
       );
       return {
         Success: true,
-        alterRequest: await this.requestModel.findOne({ where: { requestId } }),
+        alterRequest: await this.requestModel.findOne({
+          where: { id: requestId },
+        }),
       };
     } catch (err) {
       throw new BadRequestException(err.message || err);

@@ -6,15 +6,15 @@ import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 @Entity()
 export class Request {
   @PrimaryGeneratedColumn('increment')
-  requestId: number;
+  id: number;
 
-  @ManyToOne(() => User, (user) => user.userId)
+  @ManyToOne(() => User, (user) => user.id)
   user: User;
 
-  @ManyToOne(() => Crop, (crop) => crop.cropId)
+  @ManyToOne(() => Crop, (crop) => crop.id)
   crop: Crop;
 
-  @ManyToOne(() => AgroChemical, (agroChemical) => agroChemical.agrochemicalId)
+  @ManyToOne(() => AgroChemical, (agroChemical) => agroChemical.id)
   agroChemical: AgroChemical;
 
   @Column('int')

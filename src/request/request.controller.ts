@@ -35,10 +35,10 @@ export class RequestController {
     return await this.requestServices.getAll();
   }
 
-  // @Get('searchUserName')
-  // async searchUser(@Query() searchUserName: { name: string }) {
-  //   return await this.requestServices.searchUserId(searchUserName.name);
-  // }
+  @Get('searchUserName')
+  async searchUser(@Query() searchUserName: { name: string }) {
+    return await this.requestServices.searchUserId(searchUserName.name);
+  }
 
   @Get('getRequestByRequestId/:requestId')
   async getOne(@Param('requestId') id: number) {
