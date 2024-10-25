@@ -42,7 +42,7 @@ export class UserService {
 
   async searchBy(userName) {
     const check = await this.userModel.find({
-      where: { userName: ILike(`%${userName}%`) },
+      where: { name: ILike(`%${userName}%`) },
     });
 
     if (check.length === 0) {
@@ -53,7 +53,7 @@ export class UserService {
   }
 
   async getOne(userId: number) {
-    const getOneUser = await this.userModel.findOne({ where: { userId } });
+    const getOneUser = await this.userModel.findOne({ where: { id: userId } });
     if (!getOneUser) {
       throw new NotFoundException(`User id (${userId}) User Not Found!!`);
     }
@@ -63,7 +63,7 @@ export class UserService {
   async updateUser(userId: number, updateUser: UpdateUser) {
     try {
       //console.log(updateUser);
-      const checkUser = await this.userModel.findOne({ where: { userId } });
+      const checkUser = await this.userModel.findOne({ where: { id: userId } });
       if (!checkUser) {
         throw new NotFoundException(`${userId}'s User Not Found !!`);
       }
@@ -73,7 +73,7 @@ export class UserService {
       const alterUser = await this.userModel.update(userId, updateUser);
       return {
         Success: true,
-        alterUser: await this.userModel.findOne({ where: { userId } }),
+        alterUser: await this.userModel.findOne({ where: { id: userId } }),
       };
     } catch (err) {
       throw new BadRequestException(err.message || err);

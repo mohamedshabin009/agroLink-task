@@ -1,13 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { UserRole } from './User.dto';
+import { Request } from 'src/request/request.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('increment')
-  userId: number;
+  @OneToMany(() => Request, (request) => request.user)
+  id: number;
 
   @Column({ unique: true })
-  userName: string;
+  name: string;
 
   @Column()
   password: string;
