@@ -25,7 +25,7 @@ export class UpdateUser {
 export class UserDto {
   @IsString()
   @IsNotEmpty()
-  userName: string;
+  name: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Password is required' })

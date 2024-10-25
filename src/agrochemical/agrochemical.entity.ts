@@ -1,7 +1,7 @@
 import { Request } from 'src/request/request.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'agroChemical' })
 export class AgroChemical {
   @PrimaryGeneratedColumn('increment')
   @OneToMany(() => Request, (request) => request.agroChemical)
