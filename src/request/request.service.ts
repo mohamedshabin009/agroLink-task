@@ -27,19 +27,25 @@ export class RequestService {
     cropId: number,
     agroChemicalId: number,
   ) {
-    const user = await this.userService.getOne(userId);
-    const crop = await this.cropService.findOne(cropId);
-    const agrochemical = await this.agrochemicalService.findOne(agroChemicalId);
+    try {
+      const user = await this.userService.getOne(userId);
+      const crop = await this.cropService.findOne(cropId);
+      const agrochemical =
+        await this.agrochemicalService.findOne(agroChemicalId);
 
-    params['userId'] = user;
-    params['cropId'] = crop;
-    params['agrochemicalId'] = agrochemical;
-    const request = await this.requestModel.save(params);
+      params['user'] = user;
+      params['crop'] = crop;
+      params['agroChemical'] = agrochemical;
+      // console.info('**************************', params);
+      const request = await this.requestModel.save(params);
 
-    return {
-      success: true,
-      req: request,
-    };
+      return {
+        success: true,
+        req: request,
+      };
+    } catch (err) {
+      throw new BadRequestException(err.message || err);
+    }
   }
 
   async getAll() {
