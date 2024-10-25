@@ -31,14 +31,14 @@ export class CropService {
   async getBySearch(cropName, cropType) {
     return await this.cropModel.find({
       where: [
-        { cropName: ILike(`%${cropName}%`) },
-        { cropType: ILike(`%${cropType}%`) },
+        { name: ILike(`%${cropName}%`) },
+        { type: ILike(`%${cropType}%`) },
       ],
     });
   }
 
   async findOne(cropId: number) {
-    const findOne = await this.cropModel.findOne({ where: { cropId: cropId } });
+    const findOne = await this.cropModel.findOne({ where: { id: cropId } });
 
     if (!findOne) {
       throw new NotFoundException(`${cropId}'s Crop Not Found !!`);
@@ -48,7 +48,7 @@ export class CropService {
 
   async updateCrop(cropId: number, updateCrop: UpdateCropDto) {
     try {
-      const checkCrop = await this.cropModel.findOne({ where: { cropId } });
+      const checkCrop = await this.cropModel.findOne({ where: { id: cropId } });
 
       if (!checkCrop) {
         throw new NotFoundException(`${cropId}'s Crop Not Found !!`);
@@ -56,7 +56,7 @@ export class CropService {
       const alterCrop = await this.cropModel.update(cropId, updateCrop);
       return {
         Success: true,
-        alterCrop: await this.cropModel.findOne({ where: { cropId } }),
+        alterCrop: await this.cropModel.findOne({ where: { id: cropId } }),
       };
     } catch (err) {
       throw new BadRequestException(err.message || err);

@@ -1,15 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Request } from 'src/request/request.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class Crop {
   @PrimaryGeneratedColumn('increment')
-  cropId: number;
+  @OneToMany(() => Request, (request) => request.crop)
+  id: number;
 
   @Column()
-  cropName: string;
+  name: string;
 
   @Column()
-  cropType: string;
+  type: string;
 
   @Column()
   description: string;

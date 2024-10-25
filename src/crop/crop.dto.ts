@@ -8,11 +8,11 @@ import {
 export class CropDto {
   @IsString()
   @IsNotEmpty()
-  cropName: string;
+  name: string;
 
   @IsString()
   @IsNotEmpty()
-  cropType: string;
+  type: string;
 
   @IsString()
   @IsNotEmpty()
@@ -25,11 +25,11 @@ export class CropDto {
 export class UpdateCropDto {
   @IsString()
   @IsOptional()
-  cropName?: string;
+  name?: string;
 
   @IsString()
   @IsOptional()
-  cropType?: string;
+  type?: string;
 
   @IsString()
   @IsOptional()
