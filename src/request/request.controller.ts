@@ -17,10 +17,10 @@ export class RequestController {
 
   @Post('/addRequest/:userId/:cropId/:agroId')
   async createUser(
-    @Param('cropId') cropId: number,
-    @Param('userId') userId: number,
-    @Param('agroId') agroChemicalId: number,
     @Body() body: RequestDto,
+    @Param('userId') userId: number,
+    @Param('cropId') cropId: number,
+    @Param('agroId') agroChemicalId: number,
   ) {
     return await this.requestServices.createRequest(
       body,
