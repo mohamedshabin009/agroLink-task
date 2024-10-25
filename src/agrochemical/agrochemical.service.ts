@@ -39,7 +39,7 @@ export class AgrochemicalService {
 
   async findOne(agrochemicalId: number) {
     const getAgroId = await this.agrochemicalModel.findOne({
-      where: { agrochemicalId },
+      where: { id: agrochemicalId },
     });
     if (!getAgroId) {
       throw new NotFoundException(
@@ -52,7 +52,7 @@ export class AgrochemicalService {
   async updateAgrochemical(agrochemicalId: number, body: UpdateAgroDto) {
     try {
       const checkAgroChemicalId = await this.agrochemicalModel.findOne({
-        where: { agrochemicalId },
+        where: { id: agrochemicalId },
       });
       if (!checkAgroChemicalId) {
         throw new NotFoundException(
@@ -66,7 +66,7 @@ export class AgrochemicalService {
       return {
         Success: true,
         alterAgrochemical: await this.agrochemicalModel.findOne({
-          where: { agrochemicalId },
+          where: { id: agrochemicalId },
         }),
       };
     } catch (err) {

@@ -1,9 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Request } from 'src/request/request.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class AgroChemical {
   @PrimaryGeneratedColumn('increment')
-  agrochemicalId: number;
+  @OneToMany(() => Request, (request) => request.agroChemical)
+  id: number;
 
   @Column()
   name: string;
