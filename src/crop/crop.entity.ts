@@ -19,6 +19,6 @@ export class Crop {
   @Column()
   plantDate: Date;
 
-  @OneToMany(() => Request, (request) => request.agroChemical)
+  @OneToMany(() => Request, (request) => request.crop)
   agro: Request[];
 }
